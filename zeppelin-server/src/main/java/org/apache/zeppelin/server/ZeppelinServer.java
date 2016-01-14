@@ -87,6 +87,9 @@ public class ZeppelinServer extends Application {
     // REST api
     final ServletContextHandler restApi = setupRestApiContextHandler();
 
+    // Service api
+    final ServletContextHandler service = setupServiceContextHandler();
+
     // Notebook server
     final ServletContextHandler notebook = setupNotebookServer(conf);
 
@@ -171,7 +174,7 @@ public class ZeppelinServer extends Application {
     cxfContext.setContextPath("/");
     cxfContext.addServlet(servletHolder, "/ws/*");
     cxfContext.addFilter(new FilterHolder(CorsFilter.class), "/*",
-        EnumSet.allOf(DispatcherType.class));
+            EnumSet.allOf(DispatcherType.class));
     return cxfContext;
   }
 
@@ -221,6 +224,20 @@ public class ZeppelinServer extends Application {
 
     cxfContext.addFilter(new FilterHolder(CorsFilter.class), "/*",
         EnumSet.allOf(DispatcherType.class));
+    return cxfContext;
+  }
+
+  private static ServletContextHandler setupServiceContextHandler() {
+    final ServletHolder cxfServletHolder = new ServletHolder(new CXFNonSpringJaxrsServlet());
+    cxfServletHolder.setInitParameter("javax.ws.rs.Application", ZeppelinServer.class.getName());
+    cxfServletHolder.setName("service");
+    cxfServletHolder.setForcedPath("service");
+
+    final ServletContextHandler cxfContext = new ServletContextHandler();
+    cxfContext.setSessionHandler(new SessionHandler());
+    cxfContext.setContextPath("/service");
+    cxfContext.addServlet(cxfServletHolder, "/*");
+
     return cxfContext;
   }
 
