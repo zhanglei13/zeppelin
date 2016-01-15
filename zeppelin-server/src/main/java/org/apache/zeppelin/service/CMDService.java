@@ -4,20 +4,15 @@ package org.apache.zeppelin.service;
  * Created by zhanglei on 2016/1/13.
  */
 
+import org.apache.zeppelin.server.JsonResponse;
 import org.apache.zeppelin.service.common.CMDUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 
-/**
- * Interpreter Rest API
- *
- */
 @Path("/cmd")
 @Produces("application/json")
 public class CMDService {
@@ -25,9 +20,14 @@ public class CMDService {
 
     public CMDService() {}
 
+    @POST
+    @Path("execute")
+    public Response excuteCMD(@PathParam("cmd") String cmd) throws IOException{
+        return new JsonResponse(Response.Status.OK, "", CMDUtils.execute(cmd).message()).build();
+    }
+
     @GET
-    @Path("cmd/execute/{cmd}")
-    public String excuteCMD(@PathParam("cmd") String cmd) throws IOException{
-        return CMDUtils.execute(cmd).message();
+    public Response getRoot() {
+        return Response.ok().build();
     }
 }
