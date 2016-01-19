@@ -17,14 +17,14 @@ public class CMDUtils {
         // create new note
         Note note = ZeppelinServer.notebook.createNote();
 
-    // run markdown paragraph, again
-    Paragraph p = note.addParagraph();
-    p.setText(cmd);
-    note.run(p.getId());
-    waitForFinish(p);
-    ZeppelinServer.notebook.removeNote(note.id());
-    return p.getResult();
-}
+        // run markdown paragraph, again
+        Paragraph p = note.addParagraph();
+        p.setText(cmd);
+        note.run(p.getId());
+        waitForFinish(p);
+        ZeppelinServer.notebook.removeNote(note.id());
+        return p.getResult();
+    }
 
     private static void waitForFinish(Paragraph p) {
         while (p.getStatus() != Job.Status.FINISHED) {
