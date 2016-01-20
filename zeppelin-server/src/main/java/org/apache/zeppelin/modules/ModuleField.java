@@ -9,12 +9,10 @@ import java.lang.annotation.Target;
  * Created by zhanglei on 2016/1/20.
  */
 
-@Target(ElementType.TYPE)
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Module {
-    ModuleType type() default ModuleType.others;
+public @interface ModuleField {
+    String name() default "";
 
-    String name();
-
-    String description() default "";
+    String desc();
 }

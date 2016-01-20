@@ -13,10 +13,15 @@ import java.io.IOException;
  */
 public class CMDUtils {
 
-    public static InterpreterResult execute(String cmd) throws IOException {
+    public static InterpreterResult execute(String cmd) {
         // create new note
-        Note note = ZeppelinServer.notebook.createNote();
-
+        Note note = null;
+        try {
+            note = ZeppelinServer.notebook.createNote();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
         // run markdown paragraph, again
         Paragraph p = note.addParagraph();
         p.setText(cmd);

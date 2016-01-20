@@ -1,5 +1,7 @@
 package org.apache.zeppelin.service.common;
 
+import org.apache.zeppelin.interpreter.InterpreterResult;
+
 import java.util.List;
 
 /**
@@ -15,16 +17,17 @@ public class DFUtils {
     }
 
     public String createDF() {
-        String id = randomID()+"_DF";
+        String id = randomID() + "_DF";
         historyDF.add(id);
         return id;
     }
 
-    public void getDFData(String id) {
-
+    public InterpreterResult getDFData(String id) {
+        String cmd = id + ".show";
+        return CMDUtils.execute(cmd);
     }
 
-    public void getDFData() {
-
+    public InterpreterResult getDFData() {
+        return getDFData(historyDF.get(historyDF.size() - 1));
     }
 }
