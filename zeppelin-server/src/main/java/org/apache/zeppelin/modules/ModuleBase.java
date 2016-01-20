@@ -34,7 +34,7 @@ public abstract class ModuleBase {
     public void register() {
         Class<?> cl = this.getClass();
         Module module = cl.getAnnotation(Module.class);
-        ModuleRepo.repository.addRepo(module.type().toString(), module.name());
+        //     ModuleRepo.repository.addRepo(module.type().toString(), module.name());
     }
 
     public void transferParams() {
