@@ -21,13 +21,10 @@ public class CMDService {
 
     public CMDService() {}
 
-    @POST
-    @Path("execute")
+    @GET
+    @Path("execute/{cmd}")
     public Response excuteCMD(@PathParam("cmd") String cmd) throws IOException{
-        InterpreterResult result = CMDUtils.execute(cmd);
-        System.out.println(result.code());
-        System.out.println(result.message());
-        System.out.println(result.type());
+        if(cmd == null || cmd.equals(""))   return Response.noContent().build();
         return new JsonResponse(Response.Status.OK, "", CMDUtils.execute(cmd).message()).build();
     }
 

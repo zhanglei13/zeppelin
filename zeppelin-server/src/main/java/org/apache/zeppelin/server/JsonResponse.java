@@ -20,6 +20,7 @@ package org.apache.zeppelin.server;
 import java.util.ArrayList;
 
 import javax.ws.rs.core.NewCookie;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.apache.zeppelin.interpreter.Interpreter;
@@ -143,4 +144,5 @@ public class JsonResponse<T> {
     }
     return r.build();
   }
+
 }

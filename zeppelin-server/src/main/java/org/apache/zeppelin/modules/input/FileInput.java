@@ -1,6 +1,5 @@
 package org.apache.zeppelin.modules.input;
 
-import org.apache.zeppelin.UDF;
 import org.apache.zeppelin.modules.*;
 
 import java.util.Map;
@@ -27,7 +26,10 @@ public class FileInput extends ModuleBase {
     private String password = "123456";
 
     @ModuleUDF
-    private String cmd = new UDF().ss();
+    private String cmd =
+            "    val jdbcDF = sqlContext.read.format(\"jdbc\").options(\n" +
+                    "    Map(\"url\"->\"{url}\", \"driver\"->\"{driver}\", \"dbtable\"->\"{dbtable}\", \"user\"->\"{user}\", \"password\"->\"{password}\")\n" +
+                    "    ).load()";
 
     public FileInput() {
         super();

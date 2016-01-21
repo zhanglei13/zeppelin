@@ -1,11 +1,11 @@
 package org.apache.zeppelin.service;
 
+import org.apache.zeppelin.modules.ModuleProxy;
+import org.apache.zeppelin.server.JsonResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
 /**
@@ -20,8 +20,21 @@ public class ModuleService {
     public ModuleService() {}
 
     @GET
-    public Response getRoot() {
-        return Response.ok().build();
+    @Path("/")
+    public Response getAllTypes() {
+        return new JsonResponse(Response.Status.OK, "", ModuleProxy.getTypeNames()).build();
+    }
+
+    @GET
+    @Path("/modules")
+    public Response getAllModules() {
+        return new JsonResponse(Response.Status.OK, "", ModuleProxy.getTypeModules()).build();
+    }
+
+    @GET
+    @Path("{type}")
+    public Response getModuleParams(@PathParam("type") String type, @MatrixParam("name") String name) {
+        return new JsonResponse(Response.Status.OK, "", ModuleProxy.getModuleParams(type, name)).build();
     }
 }
 

@@ -14,7 +14,6 @@ import java.io.IOException;
 public class CMDUtils {
 
     public static InterpreterResult execute(String cmd) {
-        // create new note
         Note note = null;
         try {
             note = ZeppelinServer.notebook.createNote();
@@ -22,13 +21,14 @@ public class CMDUtils {
             e.printStackTrace();
             return null;
         }
-        // run markdown paragraph, again
+
         Paragraph p = note.addParagraph();
         p.setText(cmd);
         note.run(p.getId());
         waitForFinish(p);
+        InterpreterResult result = p.getResult();
         ZeppelinServer.notebook.removeNote(note.id());
-        return p.getResult();
+        return result;
     }
 
     private static void waitForFinish(Paragraph p) {

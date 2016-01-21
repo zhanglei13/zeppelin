@@ -1,6 +1,5 @@
 package org.apache.zeppelin.modules.input;
 
-import org.apache.zeppelin.UDF;
 import org.apache.zeppelin.modules.ModuleBase;
 import org.apache.zeppelin.modules.ModuleData;
 

@@ -1,6 +1,6 @@
 package org.apache.zeppelin.modules;
 
-import javafx.util.Pair;
+import org.apache.zeppelin.utils.Pair;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -28,15 +28,14 @@ public enum ModuleRepo {
     public void init() {
         for (ModuleType type : ModuleType.values()) {
             String directory = type.name();
-            File file = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath() + "\\org\\apache\\zeppelin\\modules\\" + directory);
-            //     System.out.println(ModuleRepo.class.getResource("").getPath());
+            File file = new File(this.getClass().getResource("").getPath() + directory);
             if (file.listFiles() == null) continue;
 
             for (File f : file.listFiles()) {
                 try {
                     String name = f.getName().split("\\.")[0];
                     Class<?> cl = Class.forName("org.apache.zeppelin.modules." + directory + "." + name);
-                    map.put(new Pair<>(directory, name), cl);
+                    map.put(new Pair(directory, name), cl);
                     if (cl.isAnnotationPresent(Module.class)) {
                         Module module = cl.getAnnotation(Module.class);
                         String key = module.type().toString();
@@ -116,7 +115,7 @@ public enum ModuleRepo {
 //            System.out.print(key + " ");
 //            System.out.println(entry.getValue().getName());
 //        }
-        ModuleBase module = ModuleRepo.repository.createModule("input", "FileInput");
-        System.out.println(module);
+//        ModuleBase module = ModuleRepo.repository.createModule("input", "FileInput");
+//        System.out.println(module);
     }
 }

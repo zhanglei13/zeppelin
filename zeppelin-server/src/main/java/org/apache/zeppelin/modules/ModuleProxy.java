@@ -22,17 +22,17 @@ public class ModuleProxy {
         return ModuleRepo.repository.getModules();
     }
 
-    public Map<String, String> getModuleParams(String type, String name) {
+    public static Map<String, String> getModuleParams(String type, String name) {
         return ModuleRepo.repository.getModuleParams(type, name);
     }
 
 
-    public ModuleBase createModule(String type, String name) {
+    public static ModuleBase createModule(String type, String name) {
         return ModuleRepo.repository.createModule(type, name);
     }
 
-    public ModuleData executeModule(String type, String name, ModuleData data, Map<String, String> config) {
-        ModuleBase module = this.createModule(type, name);
+    public static ModuleData executeModule(String type, String name, ModuleData data, Map<String, String> config) {
+        ModuleBase module = createModule(type, name);
         return module.execute(data, config);
     }
 }

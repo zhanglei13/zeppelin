@@ -9,25 +9,25 @@ import java.util.List;
  */
 public class DFUtils {
     private static long id = 0;
-    private List<String> savedDF;
-    private List<String> historyDF;
+    private static List<String> savedDF;
+    private static List<String> historyDF;
 
-    public long randomID() {
+    public static long randomID() {
         return id++;
     }
 
-    public String createDF() {
+    public static String createDF() {
         String id = randomID() + "_DF";
         historyDF.add(id);
         return id;
     }
 
-    public InterpreterResult getDFData(String id) {
+    public static InterpreterResult getDFData(String id) {
         String cmd = id + ".show";
         return CMDUtils.execute(cmd);
     }
 
-    public InterpreterResult getDFData() {
+    public static InterpreterResult getDFData() {
         return getDFData(historyDF.get(historyDF.size() - 1));
     }
 }

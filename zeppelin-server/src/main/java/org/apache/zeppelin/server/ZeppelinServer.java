@@ -31,6 +31,7 @@ import org.apache.cxf.jaxrs.servlet.CXFNonSpringJaxrsServlet;
 import org.apache.zeppelin.conf.ZeppelinConfiguration;
 import org.apache.zeppelin.conf.ZeppelinConfiguration.ConfVars;
 import org.apache.zeppelin.interpreter.InterpreterFactory;
+import org.apache.zeppelin.modules.ModuleRepo;
 import org.apache.zeppelin.notebook.Notebook;
 import org.apache.zeppelin.notebook.repo.NotebookRepo;
 import org.apache.zeppelin.notebook.repo.NotebookRepoSync;
@@ -39,6 +40,8 @@ import org.apache.zeppelin.rest.NotebookRestApi;
 import org.apache.zeppelin.rest.ZeppelinRestApi;
 import org.apache.zeppelin.scheduler.SchedulerFactory;
 import org.apache.zeppelin.service.CMDService;
+import org.apache.zeppelin.service.DFService;
+import org.apache.zeppelin.service.ModuleService;
 import org.apache.zeppelin.socket.NotebookServer;
 import org.eclipse.jetty.server.AbstractConnector;
 import org.eclipse.jetty.server.Handler;
@@ -99,6 +102,8 @@ public class ZeppelinServer extends Application {
     ContextHandlerCollection contexts = new ContextHandlerCollection();
     contexts.setHandlers(new Handler[]{restApi, service, notebook, webApp});
     jettyServer.setHandler(contexts);
+
+    ModuleRepo.repository.init();
 
     LOG.info("Start zeppelin server");
     try {
@@ -295,6 +300,12 @@ public class ZeppelinServer extends Application {
 
     CMDService cmdService = new CMDService();
     singletons.add(cmdService);
+
+    ModuleService moduleService = new ModuleService();
+    singletons.add(moduleService);
+
+    DFService dfService = new DFService();
+    singletons.add(dfService);
 
     return singletons;
   }
