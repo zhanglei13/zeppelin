@@ -3,6 +3,8 @@ package org.apache.zeppelin.modules.input;
 import org.apache.zeppelin.UDF;
 import org.apache.zeppelin.modules.*;
 
+import java.util.Map;
+
 /**
  * Created by zhanglei on 2016/1/20.
  */
@@ -27,13 +29,14 @@ public class FileInput extends ModuleBase {
     @ModuleUDF
     private String cmd = new UDF().ss();
 
-    @Override
-    public ModuleData execute() {
-        return null;
-    }
-
     public FileInput() {
         super();
+    }
+
+    @Override
+    public ModuleData execute(ModuleData data, Map<String, String> config) {
+     //   initFields(config);
         transferParams();
+        return null;
     }
 }

@@ -3,6 +3,7 @@ package org.apache.zeppelin.modules;
 import javafx.util.Pair;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,6 +67,21 @@ public enum ModuleRepo {
 //        }
 //    }
 //
+
+    public Map<String, String> getModuleParams(String type, String name) {
+        Map<String, String> params = new HashMap<>();
+        Pair<String, String> pair = new Pair<>(type, name);
+        if (!map.containsKey(pair)) return params;
+        Class<?> cl = map.get(pair);
+        for (Field field : cl.getDeclaredFields()) {
+            if (field.isAnnotationPresent(ModuleField.class)) {
+                ModuleField f = field.getAnnotation(ModuleField.class);
+                params.put(field.getName(), f.desc());
+            }
+        }
+        return params;
+    }
+
     public ModuleBase createModule(String type, String name) {
         ModuleBase moduleBase = null;
         Pair<String, String> pair = new Pair<>(type, name);

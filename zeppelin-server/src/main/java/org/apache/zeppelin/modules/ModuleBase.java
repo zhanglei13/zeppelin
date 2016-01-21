@@ -10,26 +10,24 @@ import java.util.Map;
  * Created by zhanglei on 2016/1/13.
  */
 public abstract class ModuleBase {
-    protected Map<String, String> params;
-    protected ModuleData data;
 
     public ModuleBase() {
-        params = new LinkedHashMap<>();
-        this.initConf();
-     //   this.register();
+//        params = new LinkedHashMap<>();
+//        this.initConf();
+        //   this.register();
     }
 
-    public abstract ModuleData execute();
+    public abstract ModuleData execute(ModuleData data, Map<String, String> config);
 
-    public void initConf() {
-        Class<?> cl = this.getClass();
-        for (Field field : cl.getDeclaredFields()) {
-            if (field.isAnnotationPresent(ModuleField.class)) {
-                ModuleField f = field.getAnnotation(ModuleField.class);
-                params.put(field.getName(), f.desc());
-            }
-        }
-    }
+//    public void initConf() {
+//        Class<?> cl = this.getClass();
+//        for (Field field : cl.getDeclaredFields()) {
+//            if (field.isAnnotationPresent(ModuleField.class)) {
+//                ModuleField f = field.getAnnotation(ModuleField.class);
+//                params.put(field.getName(), f.desc());
+//            }
+//        }
+//    }
 
 //    public void register() {
 //        Class<?> cl = this.getClass();
@@ -67,19 +65,4 @@ public abstract class ModuleBase {
         }
     }
 
-    public Map<String, String> getParams() {
-        return params;
-    }
-
-    public void setParams(Map<String, String> params) {
-        this.params = params;
-    }
-
-    public ModuleData getData() {
-        return data;
-    }
-
-    public void setData(ModuleData data) {
-        this.data = data;
-    }
 }
