@@ -4,6 +4,7 @@ package org.apache.zeppelin.service;
  * Created by zhanglei on 2016/1/13.
  */
 
+import org.apache.zeppelin.interpreter.InterpreterResult;
 import org.apache.zeppelin.server.JsonResponse;
 import org.apache.zeppelin.service.common.CMDUtils;
 import org.slf4j.Logger;
@@ -23,6 +24,10 @@ public class CMDService {
     @POST
     @Path("execute")
     public Response excuteCMD(@PathParam("cmd") String cmd) throws IOException{
+        InterpreterResult result = CMDUtils.execute(cmd);
+        System.out.println(result.code());
+        System.out.println(result.message());
+        System.out.println(result.type());
         return new JsonResponse(Response.Status.OK, "", CMDUtils.execute(cmd).message()).build();
     }
 
