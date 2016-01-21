@@ -61,4 +61,15 @@ public class ModuleInfo {
     public void setDecription(String decription) {
         this.decription = decription;
     }
+
+    @Override
+    public String toString() {
+        return "ModuleInfo{" +
+                "type='" + type + '\'' +
+                ", typeCN='" + typeCN + '\'' +
+                ", name='" + name + '\'' +
+                ", nameCN='" + nameCN + '\'' +
+                ", decription='" + decription + '\'' +
+                '}';
+    }
 }

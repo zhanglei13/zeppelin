@@ -36,6 +36,18 @@ public enum ModuleRepo {
                     String name = f.getName().split("\\.")[0];
                     Class<?> cl = Class.forName("org.apache.zeppelin.modules." + directory + "." + name);
                     map.put(new Pair<>(directory, name), cl);
+                    if (cl.isAnnotationPresent(Module.class)) {
+                        Module module = cl.getAnnotation(Module.class);
+                        String key = module.type().toString();
+                        ModuleInfo info = new ModuleInfo(directory, key, name, module.name(), module.description());
+                        if (modules.containsKey(key)) modules.get(key).add(info);
+                        else {
+                            List<ModuleInfo> infos = new ArrayList<>();
+                            infos.add(info);
+                            modules.put(key, infos);
+                        }
+                    }
+
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -44,7 +56,7 @@ public enum ModuleRepo {
         }
     }
 
-//    public void addRepo(String type, String name) {
+    //    public void addRepo(String type, String name) {
 //        if (modules.containsKey(type))
 //            modules.get(type).add(name);
 //        else {
@@ -54,11 +66,41 @@ public enum ModuleRepo {
 //        }
 //    }
 //
-//    public Map<String, List<String>> getModules() {
-//        return modules;
-//    }
+    public ModuleBase createModule(String type, String name) {
+        ModuleBase moduleBase = null;
+        Pair<String, String> pair = new Pair<>(type, name);
+        if (map.containsKey(pair)) {
+            try {
+                moduleBase = (ModuleBase) map.get(pair).newInstance();
+                return moduleBase;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public Map<String, List<ModuleInfo>> getModules() {
+        return modules;
+    }
 
     public static void main(String[] args) {
         ModuleRepo.repository.init();
+        Map<String, List<ModuleInfo>> map = ModuleRepo.repository.getModules();
+        for (String key : map.keySet()) {
+            System.out.print(key + ": ");
+            for (ModuleInfo info : map.get(key)) {
+                System.out.println(info);
+            }
+        }
+        System.out.println();
+//        Map<Pair<String, String>, Class<?>> mm = ModuleRepo.repository.map;
+//        for (Map.Entry<Pair<String, String>, Class<?>> entry : mm.entrySet()) {
+//            Pair<String, String> key = entry.getKey();
+//            System.out.print(key + " ");
+//            System.out.println(entry.getValue().getName());
+//        }
+        ModuleBase module = ModuleRepo.repository.createModule("input", "FileInput");
+        System.out.println(module);
     }
 }

@@ -16,7 +16,7 @@ public abstract class ModuleBase {
     public ModuleBase() {
         params = new LinkedHashMap<>();
         this.initConf();
-        this.register();
+     //   this.register();
     }
 
     public abstract ModuleData execute();
@@ -31,11 +31,11 @@ public abstract class ModuleBase {
         }
     }
 
-    public void register() {
-        Class<?> cl = this.getClass();
-        Module module = cl.getAnnotation(Module.class);
-        //     ModuleRepo.repository.addRepo(module.type().toString(), module.name());
-    }
+//    public void register() {
+//        Class<?> cl = this.getClass();
+//        Module module = cl.getAnnotation(Module.class);
+//        ModuleRepo.repository.addRepo(module.type().toString(), module.name());
+//    }
 
     public void transferParams() {
         Class<?> cl = this.getClass();
