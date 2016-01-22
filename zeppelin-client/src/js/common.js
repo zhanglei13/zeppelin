@@ -1,17 +1,26 @@
 /**
  * Created by zhanglei on 2016/1/12.
  */
-var s1,s2;
+
 $(document).ready(function(){
     // 组件导航栏加载
     $.ajax({
-        url: "http://133.133.133.53:8080/api/module/modules",
+        url: "http://133.133.133.53:8080/api/module",
         type: "GET",
         dataType:"json",
         success:function(data){
-            $.each(data.body,function(navName,modules) {
+            var content = "";
+            $.each(data.body,function(key,moduleList) {
+                content += "<li class=\"dropdown\"><a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">"+key+"<strong class=\"caret\"></strong></a>";
+                content += "<ul class=\"dropdown-menu\">";
 
+                $.each(moduleList, function(i, item) {
+                    content += "<li><a>"+item.nameCN+"</a></li>";
+                });
+
+                content += "</ul></li>";
             });
+            $('#modules-nav').append(content);
         }
     });
 
