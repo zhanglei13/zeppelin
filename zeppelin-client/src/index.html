@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
     <title>Spark interactive data cleansing</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <link rel="stylesheet" href="asserts/bootstrap-3.3.5-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="asserts/bootstrap-3.3.5-dist/css/bootstrap-theme.min.css">
@@ -59,7 +60,7 @@
                     </div>
 
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
+                        <ul class="nav navbar-nav" id="modules-nav">
                             <li>
                                 <a id="modal-502747" href="#modal-container-502747" role="button" class="btn" data-toggle="modal">Link</a>
                             </li>
@@ -87,6 +88,28 @@
                                     </li>
                                 </ul>
                             </li>
+
+                            <script>
+                                $.ajax({
+                                    url: "",
+                                    type: "GET",
+                                    dataType:"json",
+                                    success:function(data){
+                                        $.each(data,function(i,module) {
+                                            $('#modules-nav').append("<li class=\"dropdown\">");
+                                            $('#modules-nav').append("<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">"+module+"<strong class=\"caret\"></strong></a>");
+                                            $('#modules-nav').append("<ul class=\"dropdown-menu\">");
+                                            appendModules(module);
+                                            $('#modules-nav').append("</ul></li>");
+                                        });
+                                    }
+                                });
+
+                                function appendModules(module) {
+                                }
+                            </script>
+
+
                         </ul>
                     </div>
 
