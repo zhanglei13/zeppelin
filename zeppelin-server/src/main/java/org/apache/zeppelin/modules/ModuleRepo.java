@@ -4,10 +4,7 @@ import org.apache.zeppelin.utils.Pair;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by zhanglei on 2016/1/18.
@@ -22,10 +19,14 @@ public enum ModuleRepo {
 
     private ModuleRepo() {
         this.map = new HashMap<>();
-        this.modules = new HashMap<>();
+        this.modules = new LinkedHashMap<>();
     }
 
     public void init() {
+        for (ModuleType type : ModuleType.values()) {
+            modules.put(type.toString(), new ArrayList<ModuleInfo>());
+        }
+
         for (ModuleType type : ModuleType.values()) {
             String directory = type.name();
             File file = new File(this.getClass().getResource("").getPath() + directory);
@@ -40,12 +41,7 @@ public enum ModuleRepo {
                         Module module = cl.getAnnotation(Module.class);
                         String key = module.type().toString();
                         ModuleInfo info = new ModuleInfo(directory, key, name, module.name(), module.description());
-                        if (modules.containsKey(key)) modules.get(key).add(info);
-                        else {
-                            List<ModuleInfo> infos = new ArrayList<>();
-                            infos.add(info);
-                            modules.put(key, infos);
-                        }
+                        modules.get(key).add(info);
                     }
 
                 } catch (ClassNotFoundException e) {

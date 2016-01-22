@@ -1,7 +1,25 @@
 /**
  * Created by zhanglei on 2016/1/12.
  */
+var s1,s2;
 $(document).ready(function(){
+    // 组件导航栏加载
+    $.ajax({
+        url: "http://133.133.133.53:8080/api/module/modules",
+        type: "GET",
+        dataType:"json",
+        success:function(data){
+            $.each(data.body,function(key,infos) {
+                $('#modules-nav').append("<li class=\"dropdown\"><a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">"+key+"<strong class=\"caret\"></strong></a>");
+                $('#modules-nav').append("<ul class=\"dropdown-menu\">");
+                appendModules(module);
+                $('#modules-nav').append("</ul></li>");
+            });
+        }
+    });
+
+
+    // 组件弹窗部分
     $("#model_connect").click(function(){
         $.post("xxxxxx", $("#modal-container-502747-form").serialize(), function (result) {console.log(result) }, "json");
         $('#modal-container-502747').modal('hide');

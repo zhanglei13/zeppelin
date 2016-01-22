@@ -19,14 +19,14 @@ public class ModuleService {
 
     public ModuleService() {}
 
-    @GET
-    @Path("/")
-    public Response getAllTypes() {
-        return new JsonResponse(Response.Status.OK, "", ModuleProxy.getTypeNames()).build();
-    }
+//    @GET
+//    @Path("/")
+//    public Response getAllTypes() {
+//        return new JsonResponse(Response.Status.OK, "", ModuleProxy.getTypeNames()).build();
+//    }
 
     @GET
-    @Path("/modules")
+    @Path("/")
     public Response getAllModules() {
         return new JsonResponse(Response.Status.OK, "", ModuleProxy.getTypeModules()).build();
     }
