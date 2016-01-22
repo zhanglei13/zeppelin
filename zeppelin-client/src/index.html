@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<head>
+    <title>Spark interactive data cleansing</title>
+
+    <link rel="stylesheet" href="asserts/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="asserts/bootstrap-3.3.5-dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="asserts/DataTables-1.10.10/media/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="asserts/DataTables-1.10.10/extensions/Scroller/css/scroller.dataTables.css">
+    <link rel="stylesheet" href="asserts/codemirror-5.10/lib/codemirror.css">
+    <link rel="stylesheet" href="asserts/codemirror-5.10/addon/hint/show-hint.css" />
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+
+    <script src="asserts/jquery.min.js"></script>
+    <script src="asserts/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <script src="asserts/DataTables-1.10.10/media/js/jquery.dataTables.js"></script>
+    <script src="asserts/DataTables-1.10.10/extensions/Scroller/js/dataTables.scroller.js"></script>
+    <script src="asserts/codemirror-5.10/lib/codemirror.js"></script>
+    <script src="asserts/codemirror-5.10/mode/sql/sql.js"></script>
+    <script src="asserts/codemirror-5.10/addon/edit/matchbrackets.js"></script>
+    <script src="asserts/codemirror-5.10/mode/clike/clike.js"></script>
+    <script src="asserts/codemirror-5.10/addon/hint/show-hint.js"></script>
+    <script src="asserts/codemirror-5.10/addon/hint/sql-hint.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-3 column box">
+            <!-- 界面左侧，左右3:9 -->
+            <div class="tabbable" id="tabs-357177">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#panel-657706" data-toggle="tab">数据源</a>
+                    </li>
+                    <li>
+                        <a href="#panel-421784" data-toggle="tab">组件</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="panel-657706">
+                        <p>
+                            I'm in Section 1.
+                        </p>
+                    </div>
+                    <div class="tab-pane" id="panel-421784">
+                        <p>
+                            Howdy, I'm in Section 2.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 column">
+            <!-- 右侧上：组件菜单栏 -->
+            <div class="row clearfix box">
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">Brand</a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a id="modal-502747" href="#modal-container-502747" role="button" class="btn" data-toggle="modal">Link</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<strong class="caret"></strong></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#">Action</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Another action</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Something else here</a>
+                                    </li>
+                                    <li class="divider">
+                                    </li>
+                                    <li>
+                                        <a href="#">Separated link</a>
+                                    </li>
+                                    <li class="divider">
+                                    </li>
+                                    <li>
+                                        <a href="#">One more separated link</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                </nav>
+            </div>
+
+            <!-- 右侧中：代码框 -->
+            <div class="row clearfix box">
+                <div class="col-md-12 column">
+                    <textarea id="code" name="code"></textarea>
+                    <script>
+                        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+                            mode: "text/x-sql",
+                            indentWithTabs: true,
+                            height: 240,
+                            smartIndent: true,
+                            lineNumbers: true,
+                            matchBrackets : true,
+                            autofocus: true,
+                            extraKeys: {"Ctrl-Enter": "autocomplete"}
+                        });
+                        editor.setSize("100%","150");
+                        editor.on("inputRead", function(editor, event){
+                            if (!editor.state.completionActive){
+                                CodeMirror.commands.autocomplete(editor, null, { completeSingle: false });
+                            }
+                        });
+                    </script>
+
+                    <div class="row clearfix">
+                        <div class="col-md-12 column">
+                            <div class="actions">
+                                <button type="button" class="btn btn-primary">执行</button>
+                                <button type="button" class="btn btn-default">撤销</button>
+                                <button type="button" class="btn btn-default">重做</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 右侧下：表格，RDD -->
+            <div class="row clearfix box">
+                <div class="col-md-12 column">
+                    <div class="tabbable" id="tabs-861604">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a href="#panel-813370" data-toggle="tab">结果</a>
+                            </li>
+                            <li>
+                                <a href="#panel-18538" data-toggle="tab">RDD</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <script>
+                                $(document).ready(function() {
+                                    $('#example').DataTable( {
+                                        "ajax": "asserts/DataTables-1.10.10/extensions/Scroller/examples/data/2500.txt",
+                                        deferRender:    true,
+                                        scrollY:        260,
+                                        scrollCollapse: true,
+                                        ordering:       false,
+                                        searching:      false,
+                                        scroller:       true
+//                                        "scrollCollapse": true,
+//                                        //"serverSide": true,
+//                                        "ordering": false,
+//                                        "searching": false,
+////                                        "ajax": {
+////                                            "url": CONST_WEB_SERVICE_URL + "GetData",
+////                                            "type": "POST"
+////                                        },
+//                                        "scroller": {
+//                                            "loadingIndicator": true
+//                                        },
+//                                        "deferRender": true,
+//                                        "dom": "rtiS",
+//                                        "scrollY": "260px"
+                                    } );
+                                } );
+                            </script>
+
+                            <!-- 表格部分 -->
+                            <div class="tab-pane active" id="panel-813370">
+                                <table id="example" class="display nowrap" cellspacing="0" width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>First name</th>
+                                        <th>Last name</th>
+                                        <th>ZIP / Post code</th>
+                                        <th>Country</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <!-- RDD部分 -->
+                            <div class="tab-pane" id="panel-18538">
+                                <div class="panel-group" id="panel-400461">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <a class="panel-title" data-toggle="collapse" data-parent="#panel-400461" href="#panel-element-393125">已保存RDD</a>
+                                        </div>
+                                        <div id="panel-element-393125" class="panel-collapse in">
+                                            <div class="panel-body">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">
+                                                        xxx-RDD
+                                                        <a id="modal-611101" href="#modal-container-611101" role="button" class="btn" data-toggle="modal"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-400461" href="#panel-element-922834">历史RDD</a>
+                                        </div>
+                                        <div id="panel-element-922834" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                Anim pariatur cliche...
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 弹窗部分，js控制 -->
+        <div class="modal fade" id="modal-container-611101" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            标题
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        内容...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> <button type="button" class="btn btn-primary">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 表格弹窗部分 -->
+        <div class="modal fade" id="modal-container-502747" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel1">
+                            标题
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        内容...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> <button type="button" class="btn btn-primary">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html> 
