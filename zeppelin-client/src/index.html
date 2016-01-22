@@ -90,6 +90,12 @@
                             </li>
 
                             <script>
+                                var modules;
+                                $.getJSON("", function(data){
+                                    modules = data;
+                                });
+
+
                                 $.ajax({
                                     url: "",
                                     type: "GET",
