@@ -111,7 +111,7 @@ public enum ModuleRepo {
 //            System.out.print(key + " ");
 //            System.out.println(entry.getValue().getName());
 //        }
-//        ModuleBase module = ModuleRepo.repository.createModule("input", "FileInput");
+//        ModuleBase module = ModuleRepo.repository.createModule("input", "DBInput");
 //        System.out.println(module);
     }
 }

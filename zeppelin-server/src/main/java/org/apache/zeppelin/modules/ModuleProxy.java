@@ -1,7 +1,5 @@
 package org.apache.zeppelin.modules;
 
-import org.apache.zeppelin.modules.input.FileInput;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
