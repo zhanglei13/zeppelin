@@ -1,0 +1,32 @@
+{
+  "status": "OK",
+  "message": "",
+  "body": {
+    "输入": [
+      {
+        "type": "input",
+        "typeCN": "输入",
+        "name": "FileInput",
+        "nameCN": "数据库输入",
+        "decription": ""
+      },
+      {
+        "type": "input",
+        "typeCN": "输入",
+        "name": "DBInput",
+        "nameCN": "文件输入",
+        "decription": ""
+      }
+    ],
+    "输出": [
+      {
+        "type": "output",
+        "typeCN": "输出",
+        "name": "DBOutput",
+        "nameCN": "数据库输出",
+        "decription": ""
+      }
+    ],
+    "其他": []
+  }
+}

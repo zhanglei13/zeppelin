@@ -9,11 +9,8 @@ $(document).ready(function(){
         type: "GET",
         dataType:"json",
         success:function(data){
-            $.each(data.body,function(key,infos) {
-                $('#modules-nav').append("<li class=\"dropdown\"><a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">"+key+"<strong class=\"caret\"></strong></a>");
-                $('#modules-nav').append("<ul class=\"dropdown-menu\">");
-                appendModules(module);
-                $('#modules-nav').append("</ul></li>");
+            $.each(data.body,function(navName,modules) {
+
             });
         }
     });
