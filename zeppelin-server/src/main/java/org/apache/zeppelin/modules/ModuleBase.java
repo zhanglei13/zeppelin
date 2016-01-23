@@ -17,7 +17,7 @@ public abstract class ModuleBase {
         //   this.register();
     }
 
-    public abstract ModuleData execute(ModuleData data, Map<String, String> config);
+    public abstract void execute(ModuleData data, Map<String, String> config);
 
 //    public void initConf() {
 //        Class<?> cl = this.getClass();

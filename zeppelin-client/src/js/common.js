@@ -61,7 +61,7 @@ $(document).ready(function(){
     // 组件弹窗部分
     $("#model_connect").click(function(){
         console.log($("#modal-container-502747-form").serialize());
-        $.post("xxxxxx", $("#modal-container-502747-form").serialize(), function (result) {console.log(result) }, "json");
+        $.get("http://133.133.133.53:8080/api/module/execute", $("#modal-container-502747-form").serialize(), function (result) {console.log(result) }, "json");
         $('#modal-container-502747').modal('hide');
     });
 

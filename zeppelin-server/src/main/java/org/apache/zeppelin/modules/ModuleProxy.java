@@ -29,8 +29,8 @@ public class ModuleProxy {
         return ModuleRepo.repository.createModule(type, name);
     }
 
-    public static ModuleData executeModule(String type, String name, ModuleData data, Map<String, String> config) {
+    public static void executeModule(String type, String name, ModuleData data, Map<String, String> config) {
         ModuleBase module = createModule(type, name);
-        return module.execute(data, config);
+        module.execute(data, config);
     }
 }

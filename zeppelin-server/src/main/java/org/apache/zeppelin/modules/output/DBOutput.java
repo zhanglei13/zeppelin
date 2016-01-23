@@ -14,7 +14,7 @@ import java.util.Map;
 @Module(name = "数据库输出", type = ModuleType.output)
 public class DBOutput extends ModuleBase {
     @Override
-    public ModuleData execute(ModuleData data, Map<String, String> config) {
-        return null;
+    public void execute(ModuleData data, Map<String, String> config) {
+
     }
 }

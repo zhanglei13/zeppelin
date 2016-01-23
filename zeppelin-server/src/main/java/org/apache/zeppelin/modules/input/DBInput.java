@@ -36,9 +36,8 @@ public class DBInput extends ModuleBase {
     }
 
     @Override
-    public ModuleData execute(ModuleData data, Map<String, String> config) {
+    public void execute(ModuleData data, Map<String, String> config) {
      //   initFields(config);
         transferParams();
-        return null;
     }
 }

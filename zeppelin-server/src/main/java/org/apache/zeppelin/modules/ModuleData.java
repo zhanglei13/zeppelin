@@ -16,6 +16,11 @@ public class ModuleData {
         this.isDF = true;
     }
 
+    public ModuleData(String prev, String id) {
+        this.prev = prev;
+        this.id = id;
+    }
+
     public ModuleData(String prev, String id, String info, boolean isDF) {
         this.prev = prev;
         this.id = id;
