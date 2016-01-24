@@ -27,7 +27,8 @@ public class ModuleService {
 
     Gson gson = new Gson();
 
-    public ModuleService() {}
+    public ModuleService() {
+    }
 
 //    @GET
 //    @Path("/")
@@ -53,7 +54,7 @@ public class ModuleService {
         Map<String, String> params = new HashMap<>();
         MultivaluedMap<String, String> queryParams = info.getQueryParameters();
 
-        for(String key : queryParams.keySet()) {
+        for (String key : queryParams.keySet()) {
             params.put(key, queryParams.getFirst(key));
         }
         System.out.println(params.size());

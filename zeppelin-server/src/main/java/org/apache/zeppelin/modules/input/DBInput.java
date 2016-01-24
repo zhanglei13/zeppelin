@@ -27,7 +27,7 @@ public class DBInput extends ModuleBase {
 
     @ModuleUDF
     private String cmd =
-            "    val jdbcDF = sqlContext.read.format(\"jdbc\").options(\n" +
+            "    val {df} = sqlContext.read.format(\"jdbc\").options(\n" +
                     "    Map(\"url\"->\"{url}\", \"driver\"->\"{driver}\", \"dbtable\"->\"{dbtable}\", \"user\"->\"{user}\", \"password\"->\"{password}\")\n" +
                     "    ).load()";
 

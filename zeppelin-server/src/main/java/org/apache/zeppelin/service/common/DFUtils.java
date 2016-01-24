@@ -25,15 +25,55 @@ public class DFUtils {
     }
 
     public static String getPrevId() {
-        return historyDF.isEmpty() ? null : historyDF.get(historyDF.size()-1);
+        return historyDF.isEmpty() ? null : historyDF.get(historyDF.size() - 1);
     }
 
-    public static InterpreterResult getDFData(String id) {
-        String cmd = id + ".collect";
-        return CMDUtils.execute(cmd);
+    public static List<String> getDFSchema(String id) {
+        CMDUtils.execute(id + ".registerTempTable(\"" + id + "\")");
+        InterpreterResult result =  CMDUtils.execute(id + ".columns.mkString(\",\")");
+        List<String> cols = new ArrayList<>();
+        String meta = result.message().split("=")[1].trim();
+        for (String s : meta.split(",")) {
+            cols.add(s);
+        }
+        return cols;
     }
 
-    public static InterpreterResult getDFData() {
+    public static List<String> getDFSchema() {
+        if(historyDF.isEmpty()) return new ArrayList<>();
+        return getDFSchema(historyDF.get(historyDF.size() - 1));
+    }
+
+    public static List<String> getDFData(String id) {
+        String cmd = id + ".toJSON.collect.mkString(\"\\n\")";
+        List<String> body = new ArrayList<>();
+        String meta = CMDUtils.execute(cmd).message().split("=")[1].trim();
+        for (String ss : meta.split("\n")) {
+            if(ss.equals(" "))   continue;
+            body.add(ss);
+        }
+        return body;
+    }
+
+    public static List<String> getDFData() {
+        if(historyDF.isEmpty()) return new ArrayList<>();
         return getDFData(historyDF.get(historyDF.size() - 1));
+    }
+
+    public static void main(String[] args) {
+        String s = "res24: String = age,name";
+
+        //String t = "res26: String = {\"name\":\"Michael\"},{\"age\":30,\"name\":\"Andy\"},{\"age\":19,\"name\":\"Justin\"}";
+        String t = "res32: String = \n" +
+                "{\"name\":\"Michael\"}\n" +
+                "{\"age\":30,\"name\":\"Andy\"}\n" +
+                "{\"age\":19,\"name\":\"Justin\"}";
+        List<String> cols = new ArrayList<>();
+        String meta = s.split("=")[1];
+        for (String ss : meta.split(",")) {
+            if(ss.equals(" "))   continue;
+            System.out.println(ss);
+            cols.add(ss);
+        }
     }
 }

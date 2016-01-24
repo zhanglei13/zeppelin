@@ -20,17 +20,30 @@ import javax.ws.rs.core.Response;
 public class DFService {
     Logger logger = LoggerFactory.getLogger(DFService.class);
 
-    public DFService() {}
+    public DFService() {
+    }
 
     @GET
     @Path("/")
-    public Response GetData() {
-        return new JsonResponse(Response.Status.OK, "", DFUtils.getDFData().message()).build();
+    public Response getData() {
+        return new JsonResponse(Response.Status.OK, "", DFUtils.getDFData()).build();
     }
 
     @GET
     @Path("{dfId}")
-    public Response GetDFData(@PathParam("dfId") String dfId) {
-        return new JsonResponse(Response.Status.OK, "", DFUtils.getDFData(dfId).message()).build();
+    public Response getDFData(@PathParam("dfId") String dfId) {
+        return new JsonResponse(Response.Status.OK, "", DFUtils.getDFData(dfId)).build();
+    }
+
+    @GET
+    @Path("/schema")
+    public Response getSchema() {
+        return new JsonResponse(Response.Status.OK, "", DFUtils.getDFSchema()).build();
+    }
+
+    @GET
+    @Path("/schema/{dfId}")
+    public Response getDFSchema(@PathParam("dfId") String dfId) {
+        return new JsonResponse(Response.Status.OK, "", DFUtils.getDFSchema(dfId)).build();
     }
 }

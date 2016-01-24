@@ -19,12 +19,14 @@ import java.io.IOException;
 public class CMDService {
     Logger logger = LoggerFactory.getLogger(CMDService.class);
 
-    public CMDService() {}
+    public CMDService() {
+    }
 
     @GET
     @Path("execute/{cmd}")
-    public Response excuteCMD(@PathParam("cmd") String cmd) throws IOException{
-        if(cmd == null || cmd.equals(""))   return Response.noContent().build();
+    public Response excuteCMD(@PathParam("cmd") String cmd) throws IOException {
+        if (cmd == null || cmd.equals("")) return Response.noContent().build();
+        cmd = "%sql select * from df";
         return new JsonResponse(Response.Status.OK, "", CMDUtils.execute(cmd).message()).build();
     }
 

@@ -149,15 +149,50 @@
                         </ul>
                         <div class="tab-content">
                             <script>
-                                $(document).ready(function() {
-                                    $('#example').DataTable( {
-                                        "ajax": "asserts/DataTables-1.10.10/extensions/Scroller/examples/data/2500.txt",
-                                        deferRender:    true,
-                                        scrollY:        260,
-                                        scrollCollapse: true,
-                                        ordering:       false,
-                                        searching:      false,
-                                        scroller:       true
+                                var headers;
+                                var cols = [];
+                                var contents;
+                                $.ajax({
+                                    url: "http://localhost:8080/api/df/schema/df",
+                                    type: "GET",
+                                    dataType: "JSON",
+                                    success: function (data) {
+                                        headers = data.body;
+                                        $.each(data.body, function (i, value) {
+                                            var subCol = {
+                                                name: value,
+                                                data: value,
+                                                defaultContent: ""
+                                            };
+                                            cols.push(subCol);
+                                        });
+                                        getTableData();
+                                    }
+                                });
+
+                                function getTableData() {
+                                    $.ajax({
+                                        url: "http://localhost:8080/api/df/df",
+                                        type: "GET",
+                                        dataType: "JSON",
+                                        success: function (data) {
+                                            initTable(data.body);
+                                        }
+                                    });
+                                }
+
+                                function initTable(data) {
+                                    console.log(data);
+                                    console.log(cols);
+                                        $('#example').DataTable({
+                                            data: data,
+                                            columns: cols,
+                                            deferRender: true,
+                                            scrollY: 260,
+                                            scrollCollapse: true,
+                                            ordering: false,
+                                            searching: false,
+                                            scroller: true
 //                                        "scrollCollapse": true,
 //                                        //"serverSide": true,
 //                                        "ordering": false,
@@ -172,22 +207,14 @@
 //                                        "deferRender": true,
 //                                        "dom": "rtiS",
 //                                        "scrollY": "260px"
-                                    } );
-                                } );
+                                        });
+                                    }
+
                             </script>
 
                             <!-- 表格部分 -->
                             <div class="tab-pane active" id="panel-813370">
                                 <table id="example" class="display nowrap" cellspacing="0" width="100%">
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>First name</th>
-                                        <th>Last name</th>
-                                        <th>ZIP / Post code</th>
-                                        <th>Country</th>
-                                    </tr>
-                                    </thead>
                                 </table>
                             </div>
                             <!-- RDD部分 -->
