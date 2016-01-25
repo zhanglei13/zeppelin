@@ -1,7 +1,10 @@
 package org.apache.zeppelin.modules.input;
 
 import org.apache.zeppelin.modules.*;
+import org.apache.zeppelin.service.common.CMDUtils;
+import org.apache.zeppelin.service.common.DFUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -26,9 +29,9 @@ public class DBInput extends ModuleBase {
     private String password = "123456";
 
     @ModuleUDF
-    private String cmd =
-            "    val {df} = sqlContext.read.format(\"jdbc\").options(\n" +
-                    "    Map(\"url\"->\"{url}\", \"driver\"->\"{driver}\", \"dbtable\"->\"{dbtable}\", \"user\"->\"{user}\", \"password\"->\"{password}\")\n" +
+    public String cmd =
+            "    val @df = sqlContext.read.format(\"jdbc\").options(\n" +
+                    "    Map(\"url\"->\"@url\", \"driver\"->\"@driver\", \"dbtable\"->\"@dbtable\", \"user\"->\"@user\", \"password\"->\"@password\")\n" +
                     "    ).load()";
 
     public DBInput() {
@@ -36,8 +39,20 @@ public class DBInput extends ModuleBase {
     }
 
     @Override
-    public void execute(ModuleData data, Map<String, String> config) {
-     //   initFields(config);
-        transferParams();
+    public void execute() {
+        CMDUtils.execute(cmd);
+        //   initFields(config);
+        //    transferParams(this.getClass(), data, config);
     }
+
+    public static void main(String[] args) {
+        DBInput input = new DBInput();
+        ModuleData data = new ModuleData("df_1");
+        Map<String, String> config = new HashMap<>();
+        config.put("url", "123");
+        config.put("user", "root");
+        input.process(data, config);
+        System.out.println(input.cmd);
+    }
+
 }

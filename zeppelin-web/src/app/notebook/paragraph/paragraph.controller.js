@@ -633,7 +633,7 @@ angular.module('zeppelinWebApp')
       desc += ' (outdated)';
     }
     return desc;
-  };  
+  };
 
   $scope.isResultOutdated = function() {
     var pdata = $scope.paragraph;
@@ -700,6 +700,7 @@ angular.module('zeppelinWebApp')
   };
 
   $scope.loadTableData = function(result) {
+    console.log(result);
     if (!result) {
       return;
     }

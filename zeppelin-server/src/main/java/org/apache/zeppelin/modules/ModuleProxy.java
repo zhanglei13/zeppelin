@@ -31,6 +31,6 @@ public class ModuleProxy {
 
     public static void executeModule(String type, String name, ModuleData data, Map<String, String> config) {
         ModuleBase module = createModule(type, name);
-        module.execute(data, config);
+        module.process(data, config);
     }
 }

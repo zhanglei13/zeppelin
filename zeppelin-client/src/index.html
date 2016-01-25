@@ -160,8 +160,7 @@
                                         headers = data.body;
                                         $.each(data.body, function (i, value) {
                                             var subCol = {
-                                                name: value,
-                                                data: value,
+                                                title: value,
                                                 defaultContent: ""
                                             };
                                             cols.push(subCol);
@@ -181,11 +180,11 @@
                                     });
                                 }
 
-                                function initTable(data) {
-                                    console.log(data);
+                                function initTable(dataset) {
+                                    console.log(dataset);
                                     console.log(cols);
                                         $('#example').DataTable({
-                                            data: data,
+                                            data: dataset,
                                             columns: cols,
                                             deferRender: true,
                                             scrollY: 260,

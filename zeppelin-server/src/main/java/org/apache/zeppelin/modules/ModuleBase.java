@@ -17,7 +17,12 @@ public abstract class ModuleBase {
         //   this.register();
     }
 
-    public abstract void execute(ModuleData data, Map<String, String> config);
+    public void process(ModuleData data, Map<String, String> config) {
+        transferParams(data, config);
+        execute();
+    }
+
+    public abstract void execute();
 
 //    public void initConf() {
 //        Class<?> cl = this.getClass();
@@ -35,34 +40,67 @@ public abstract class ModuleBase {
 //        ModuleRepo.repository.addRepo(module.type().toString(), module.name());
 //    }
 
-    public void transferParams() {
+//    public void transferParams() {
+//        Class<?> cl = this.getClass();
+//        List<Field> cmds = new ArrayList<>();
+//        List<Field> fields = new ArrayList<>();
+//
+//        for (Field field : cl.getDeclaredFields()) {
+//            if (field.isAnnotationPresent(ModuleUDF.class))
+//                cmds.add(field);
+//            if (field.isAnnotationPresent(ModuleField.class))
+//                fields.add(field);
+//        }
+//
+//        for (Field cmdField : cmds) {
+//            cmdField.setAccessible(true);
+//            try {
+//                String cmd = (String) cmdField.get(this);
+//                if (cmd == null || cmd.equals("")) continue;
+//                for (Field field : fields) {
+//                    field.setAccessible(true);
+//                    String key = "@" + field.getName();
+//                    String value = (String) field.get(this);
+//                    cmd = cmd.replaceAll(key, value);
+//                }
+//                cmdField.set(this, cmd);
+//            } catch (IllegalAccessException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+
+    public void transferParams(ModuleData data, Map<String, String> config) {
         Class<?> cl = this.getClass();
-        List<Field> cmds = new ArrayList<>();
-        List<Field> fields = new ArrayList<>();
-
         for (Field field : cl.getDeclaredFields()) {
-            if (field.isAnnotationPresent(ModuleUDF.class))
-                cmds.add(field);
-            if (field.isAnnotationPresent(ModuleField.class))
-                fields.add(field);
-        }
-
-        for (Field cmdField : cmds) {
-            cmdField.setAccessible(true);
-            try {
-                String cmd = (String) cmdField.get(this);
-                if (cmd == null || cmd.equals("")) continue;
-                for (Field field : fields) {
-                    field.setAccessible(true);
-                    String key = "@" + field.getName();
-                    String value = (String) field.get(this);
-                    cmd = cmd.replaceAll(key, value);
+            field.setAccessible(true);
+            if (field.isAnnotationPresent(ModuleUDF.class)) {
+                try {
+                    String udf = (String) field.get(this);
+                    if (udf == null || udf.equals("")) continue;
+                    udf = transferDF(data, udf);
+                    udf = transferConfig(config, udf);
+                    field.set(this, udf);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
                 }
-                cmdField.set(this, cmd);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
             }
         }
+    }
+
+    private String transferDF(ModuleData data, String udf) {
+        String key = "@df";
+        String value = data.getId();
+        return udf.replaceAll(key, value);
+    }
+
+    private String transferConfig(Map<String, String> config, String udf) {
+        for (Map.Entry<String, String> entry : config.entrySet()) {
+            String key = "@" + entry.getKey();
+            String value = entry.getValue();
+            udf = udf.replaceAll(key, value);
+        }
+        return udf;
     }
 
 }
