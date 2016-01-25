@@ -24,7 +24,7 @@ $(document).ready(function(){
             $('#modules-nav').append(content);
             $("a[id^=module_]").click(function(){
                 //first empty children under the form
-                //$("#modal-container-502747-form").empty();
+                $("#modal-container-502747-form").empty();
                 //console.log("http://133.133.133.53:8080/api/module/"+$(this).attr("type")+";name="+$(this).attr("name"));
                 $.ajax({
                     type : "get",//请求方式
