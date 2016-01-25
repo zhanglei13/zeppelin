@@ -41,8 +41,6 @@ public class DBInput extends ModuleBase {
     @Override
     public void execute() {
         CMDUtils.execute(cmd);
-        //   initFields(config);
-        //    transferParams(this.getClass(), data, config);
     }
 
     public static void main(String[] args) {
