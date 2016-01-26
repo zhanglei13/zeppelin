@@ -26,6 +26,8 @@ $(document).ready(function(){
                 //first empty children under the form
                 $("#modal-container-502747-form").empty();
                 //console.log("http://133.133.133.53:8080/api/module/"+$(this).attr("type")+";name="+$(this).attr("name"));
+                var type=$(this).attr("type");
+                var name=$(this).attr("name");
                 $.ajax({
                     type : "get",//请求方式
                     url : "http://133.133.133.53:8080/api/module/"+$(this).attr("type")+";name="+$(this).attr("name"),//发送请求地址
@@ -53,18 +55,26 @@ $(document).ready(function(){
                         $('#modal-container-502747').modal('show');
                     }
                 });
+                // 组件弹窗部分
+                $("#model_connect").unbind("click");
+                $("#model_connect").click(function(){
+                    console.log($("#modal-container-502747-form").serialize());
+                    $.get("http://133.133.133.53:8080/api/module/execute", $("#modal-container-502747-form").serialize()+"&type="+type+"&name="+name, function (result) {console.log(result) }, "json");
+                    refreshTable();
+                    $('#modal-container-502747').modal('hide');
+                });
             });
         }
     });
 
 
-    // 组件弹窗部分
+   /* // 组件弹窗部分
     $("#model_connect").click(function(){
         console.log($("#modal-container-502747-form").serialize());
         $.get("http://133.133.133.53:8080/api/module/execute", $("#modal-container-502747-form").serialize(), function (result) {console.log(result) }, "json");
         refreshTable();
         $('#modal-container-502747').modal('hide');
-    });
+    });*/
 
     // 表格部分
     var headers;
