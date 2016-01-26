@@ -38,7 +38,7 @@ $(document).ready(function(){
                             var innerStr=' <input type="text" class="form-control"  name="'+key+'" id="'+key+'" placeholder="'+value+'">';
                             if(key=='driver')
                                 innerStr='<select class="form-control"  name="'+key+'" id="'+key+'">'+
-                                    '<option>mysql</option>'+
+                                    '<option value="com.mysql.jdbc.Driver">mysql</option>'+
                                     '<option>oracle</option>'+
                                     '</select>'
                             if(key=='password')
@@ -62,7 +62,70 @@ $(document).ready(function(){
     $("#model_connect").click(function(){
         console.log($("#modal-container-502747-form").serialize());
         $.get("http://133.133.133.53:8080/api/module/execute", $("#modal-container-502747-form").serialize(), function (result) {console.log(result) }, "json");
+        refreshTable();
         $('#modal-container-502747').modal('hide');
     });
+
+    // 表格部分
+    var headers;
+    function refreshTable() {
+        var cols = [];
+        $.ajax({
+            url: "http://localhost:8080/api/df/schema/df",
+            type: "GET",
+            dataType: "JSON",
+            success: function (data) {
+                headers = data.body;
+                $.each(data.body, function (i, value) {
+                    var subCol = {
+                        title: value,
+                        defaultContent: ""
+                    };
+                    cols.push(subCol);
+                });
+                getTableData();
+            }
+        });
+    }
+
+    function getTableData() {
+        $.ajax({
+            url: "http://localhost:8080/api/df/df",
+            type: "GET",
+            dataType: "JSON",
+            success: function (data) {
+                initTable(data.body);
+            }
+        });
+    }
+
+    function initTable(dataset) {
+        console.log(dataset);
+        console.log(cols);
+        $('#example').DataTable({
+            data: dataset,
+            columns: cols,
+            deferRender: true,
+            scrollY: 260,
+            scrollCollapse: true,
+            ordering: false,
+            searching: false,
+            scroller: true
+//                                        "scrollCollapse": true,
+//                                        //"serverSide": true,
+//                                        "ordering": false,
+//                                        "searching": false,
+////                                        "ajax": {
+////                                            "url": CONST_WEB_SERVICE_URL + "GetData",
+////                                            "type": "POST"
+////                                        },
+//                                        "scroller": {
+//                                            "loadingIndicator": true
+//                                        },
+//                                        "deferRender": true,
+//                                        "dom": "rtiS",
+//                                        "scrollY": "260px"
+        });
+    }
 
 });

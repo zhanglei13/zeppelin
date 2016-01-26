@@ -64,7 +64,7 @@ public enum ModuleRepo {
 //
 
     public Map<String, String> getModuleParams(String type, String name) {
-        Map<String, String> params = new HashMap<>();
+        Map<String, String> params = new LinkedHashMap<>();
         Pair<String, String> pair = new Pair<>(type, name);
         if (!map.containsKey(pair)) return params;
         Class<?> cl = map.get(pair);

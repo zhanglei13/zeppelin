@@ -148,69 +148,6 @@
                             </li>
                         </ul>
                         <div class="tab-content">
-                            <script>
-                                var headers;
-                                var cols = [];
-                                var contents;
-                                $.ajax({
-                                    url: "http://localhost:8080/api/df/schema/df",
-                                    type: "GET",
-                                    dataType: "JSON",
-                                    success: function (data) {
-                                        headers = data.body;
-                                        $.each(data.body, function (i, value) {
-                                            var subCol = {
-                                                title: value,
-                                                defaultContent: ""
-                                            };
-                                            cols.push(subCol);
-                                        });
-                                        getTableData();
-                                    }
-                                });
-
-                                function getTableData() {
-                                    $.ajax({
-                                        url: "http://localhost:8080/api/df/df",
-                                        type: "GET",
-                                        dataType: "JSON",
-                                        success: function (data) {
-                                            initTable(data.body);
-                                        }
-                                    });
-                                }
-
-                                function initTable(dataset) {
-                                    console.log(dataset);
-                                    console.log(cols);
-                                        $('#example').DataTable({
-                                            data: dataset,
-                                            columns: cols,
-                                            deferRender: true,
-                                            scrollY: 260,
-                                            scrollCollapse: true,
-                                            ordering: false,
-                                            searching: false,
-                                            scroller: true
-//                                        "scrollCollapse": true,
-//                                        //"serverSide": true,
-//                                        "ordering": false,
-//                                        "searching": false,
-////                                        "ajax": {
-////                                            "url": CONST_WEB_SERVICE_URL + "GetData",
-////                                            "type": "POST"
-////                                        },
-//                                        "scroller": {
-//                                            "loadingIndicator": true
-//                                        },
-//                                        "deferRender": true,
-//                                        "dom": "rtiS",
-//                                        "scrollY": "260px"
-                                        });
-                                    }
-
-                            </script>
-
                             <!-- 表格部分 -->
                             <div class="tab-pane active" id="panel-813370">
                                 <table id="example" class="display nowrap" cellspacing="0" width="100%">

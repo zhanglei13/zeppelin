@@ -24,7 +24,6 @@ public class ModuleProxy {
         return ModuleRepo.repository.getModuleParams(type, name);
     }
 
-
     public static ModuleBase createModule(String type, String name) {
         return ModuleRepo.repository.createModule(type, name);
     }
