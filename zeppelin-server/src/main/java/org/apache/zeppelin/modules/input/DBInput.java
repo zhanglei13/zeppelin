@@ -30,9 +30,9 @@ public class DBInput extends ModuleBase {
 
     @ModuleUDF
     public String cmd =
-            "    val @df = sqlContext.read.format(\"jdbc\").options(\n" +
-                    "    Map(\"url\"->\"@url\", \"driver\"->\"@driver\", \"dbtable\"->\"@dbtable\", \"user\"->\"@user\", \"password\"->\"@password\")\n" +
-                    "    ).load()";
+            "val @df = sqlContext.read.format(\"jdbc\").options(\n" +
+            "Map(\"url\"->\"@url\", \"driver\"->\"@driver\", \"dbtable\"->\"@dbtable\", \"user\"->\"@user\", \"password\"->\"@password\")\n" +
+            ").load()";
 
     public DBInput() {
         super();
