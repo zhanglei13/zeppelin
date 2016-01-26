@@ -68,10 +68,10 @@ $(document).ready(function(){
 
     // 表格部分
     var headers;
+    var cols = [];
     function refreshTable() {
-        var cols = [];
         $.ajax({
-            url: "http://localhost:8080/api/df/schema/df",
+            url: "http://localhost:8080/api/df/schema",
             type: "GET",
             dataType: "JSON",
             success: function (data) {
@@ -90,7 +90,7 @@ $(document).ready(function(){
 
     function getTableData() {
         $.ajax({
-            url: "http://localhost:8080/api/df/df",
+            url: "http://localhost:8080/api/df",
             type: "GET",
             dataType: "JSON",
             success: function (data) {

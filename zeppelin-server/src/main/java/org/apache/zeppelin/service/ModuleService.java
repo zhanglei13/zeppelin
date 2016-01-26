@@ -57,14 +57,9 @@ public class ModuleService {
         for (String key : queryParams.keySet()) {
             params.put(key, queryParams.getFirst(key));
         }
-        System.out.println(params.size());
-        for (Map.Entry<String, String> entry : params.entrySet()) {
-            System.out.println(entry.getKey());
-            System.out.println(entry.getValue());
-        }
 
         ModuleData data = new ModuleData(DFUtils.getPrevId(), DFUtils.createDFId());
-        String type = "input", name = "DBInput";
+        String type = "input", name = "FileInput";
         ModuleProxy.executeModule(type, name, data, params);
 
         return Response.ok().build();

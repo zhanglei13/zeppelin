@@ -26,7 +26,6 @@ public class CMDService {
     @Path("execute/{cmd}")
     public Response excuteCMD(@PathParam("cmd") String cmd) throws IOException {
         if (cmd == null || cmd.equals("")) return Response.noContent().build();
-        cmd = "%sql select * from df";
         return new JsonResponse(Response.Status.OK, "", CMDUtils.execute(cmd).message()).build();
     }
 

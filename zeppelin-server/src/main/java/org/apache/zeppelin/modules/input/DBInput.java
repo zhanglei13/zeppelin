@@ -39,7 +39,7 @@ public class DBInput extends ModuleBase {
     }
 
     @Override
-    public void execute() {
+    public void execute(ModuleData data, Map<String, String> config) {
         CMDUtils.execute(cmd);
     }
 

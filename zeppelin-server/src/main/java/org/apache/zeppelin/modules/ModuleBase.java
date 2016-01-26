@@ -19,10 +19,10 @@ public abstract class ModuleBase {
 
     public void process(ModuleData data, Map<String, String> config) {
         transferParams(data, config);
-        execute();
+        execute(data, config);
     }
 
-    public abstract void execute();
+    public abstract void execute(ModuleData data, Map<String, String> config);
 
 //    public void initConf() {
 //        Class<?> cl = this.getClass();

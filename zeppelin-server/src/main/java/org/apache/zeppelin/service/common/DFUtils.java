@@ -19,7 +19,7 @@ public class DFUtils {
     }
 
     public static String createDFId() {
-        String id = randomID() + "_DF";
+        String id = "DF_" + randomID();
         historyDF.add(id);
         return id;
     }
