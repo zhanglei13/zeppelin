@@ -29,7 +29,7 @@ public class DFUtils {
     }
 
     public static List<String> getDFSchema(String id) {
-        CMDUtils.execute(id + ".registerTempTable(\"" + id + "\")");
+     //   CMDUtils.execute(id + ".registerTempTable(\"" + id + "\")");
         InterpreterResult result =  CMDUtils.execute(id + ".columns.mkString(\",\")");
         List<String> cols = new ArrayList<>();
         String meta = result.message().split("=")[1].trim();

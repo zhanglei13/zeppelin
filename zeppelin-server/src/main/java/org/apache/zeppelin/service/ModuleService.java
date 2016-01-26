@@ -51,15 +51,20 @@ public class ModuleService {
     @GET
     @Path("/execute")
     public Response executeModule(@Context UriInfo info) {
+        String type = null, name = null;
         Map<String, String> params = new HashMap<>();
         MultivaluedMap<String, String> queryParams = info.getQueryParameters();
 
         for (String key : queryParams.keySet()) {
-            params.put(key, queryParams.getFirst(key));
+            if(key.equals("type"))  type = queryParams.getFirst(key);
+            else if(key.equals("name")) name = queryParams.getFirst(key);
+            else params.put(key, queryParams.getFirst(key));
         }
 
+        if(type == null || name == null)    return Response.noContent().build();
+
         ModuleData data = new ModuleData(DFUtils.getPrevId(), DFUtils.createDFId());
-        String type = "input", name = "FileInput";
+     //   String type = "input", name = "FileInput";
         ModuleProxy.executeModule(type, name, data, params);
 
         return Response.ok().build();

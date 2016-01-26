@@ -59,7 +59,8 @@ $(document).ready(function(){
                 $("#model_connect").unbind("click");
                 $("#model_connect").click(function(){
                     console.log($("#modal-container-502747-form").serialize());
-                    $.get("http://133.133.133.53:8080/api/module/execute", $("#modal-container-502747-form").serialize()+"&type="+type+"&name="+name, function (result) {console.log(result) }, "json");
+                    console.log("type="+type+"&name="+name + "&" + $("#modal-container-502747-form").serialize());
+                    $.get("http://133.133.133.53:8080/api/module/execute", "type="+type+"&name="+name + "&" + $("#modal-container-502747-form").serialize(), function (result) {console.log(result) }, "json");
                     refreshTable();
                     $('#modal-container-502747').modal('hide');
                 });
