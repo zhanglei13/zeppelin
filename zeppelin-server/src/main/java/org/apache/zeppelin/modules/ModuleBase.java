@@ -89,9 +89,7 @@ public abstract class ModuleBase {
     }
 
     private String transferDF(ModuleData data, String udf) {
-        String key = "@df";
-        String value = data.getId();
-        return udf.replaceAll(key, value);
+        return udf.replaceAll("@in", data.getPrev()).replaceAll("@out", data.getId());
     }
 
     private String transferConfig(Map<String, String> config, String udf) {

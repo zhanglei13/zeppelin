@@ -64,7 +64,6 @@ public class ModuleService {
         if(type == null || name == null)    return Response.noContent().build();
 
         ModuleData data = new ModuleData(DFUtils.getPrevId(), DFUtils.createDFId());
-     //   String type = "input", name = "FileInput";
         ModuleProxy.executeModule(type, name, data, params);
 
         return Response.ok().build();

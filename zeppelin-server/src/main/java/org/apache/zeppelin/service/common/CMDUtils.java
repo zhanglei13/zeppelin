@@ -12,23 +12,21 @@ import java.io.IOException;
  * Created by zhanglei on 2016/1/13.
  */
 public class CMDUtils {
-
-    public static InterpreterResult execute(String cmd) {
-        Note note = null;
+    private static Note note = null;
+    static {
         try {
             note = ZeppelinServer.notebook.createNote();
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
+    }
 
+    public static InterpreterResult execute(String cmd) {
         Paragraph p = note.addParagraph();
         p.setText(cmd);
         note.run(p.getId());
         waitForFinish(p);
-        InterpreterResult result = p.getResult();
-        ZeppelinServer.notebook.removeNote(note.id());
-        return result;
+        return p.getResult();
     }
 
     private static void waitForFinish(Paragraph p) {
@@ -39,5 +37,9 @@ public class CMDUtils {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void removeNote() {
+        ZeppelinServer.notebook.removeNote(note.id());
     }
 }

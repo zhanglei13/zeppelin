@@ -1,6 +1,8 @@
 package org.apache.zeppelin.service.common;
 
 import org.apache.zeppelin.interpreter.InterpreterResult;
+import org.apache.zeppelin.utils.DataEntity;
+import org.apache.zeppelin.utils.TableData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +66,21 @@ public class DFUtils {
     public static List<List<String>> getDFData() {
         if(historyDF.isEmpty()) return new ArrayList<>();
         return getDFData(historyDF.get(historyDF.size() - 1));
+    }
+
+    public static DataEntity getTableData() {
+        if(historyDF.isEmpty()) return null;
+        return getTableData(historyDF.get(historyDF.size() - 1));
+    }
+
+    public static DataEntity getTableData(String id) {
+        DataEntity entity = new DataEntity();
+        TableData tableData = new TableData();
+        tableData.setHeader(getDFSchema(id));
+        tableData.setData(getDFData(id));
+        entity.setMsg("success");
+        entity.setTableData(tableData);
+        return entity;
     }
 
     public static void main(String[] args) {

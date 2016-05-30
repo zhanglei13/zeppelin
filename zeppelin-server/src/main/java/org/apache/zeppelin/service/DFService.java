@@ -46,4 +46,17 @@ public class DFService {
     public Response getDFSchema(@PathParam("dfId") String dfId) {
         return new JsonResponse(Response.Status.OK, "", DFUtils.getDFSchema(dfId)).build();
     }
+
+    @GET
+    @Path("/table")
+    public Response getTable() {
+        return new JsonResponse(Response.Status.OK, "", DFUtils.getTableData()).build();
+    }
+
+    @GET
+    @Path("/table/{dfId}")
+    public Response getTableData(@PathParam("dfId") String dfId) {
+        return new JsonResponse(Response.Status.OK, "", DFUtils.getTableData(dfId)).build();
+    }
+
 }
