@@ -88,7 +88,7 @@
     <module>zeppelin-zengine</module>
     <module>spark-dependencies</module>
     <module>spark</module>
- <!--   <module>markdown</module>
+    <module>markdown</module>
     <module>angular</module>
     <module>shell</module>
     <module>hive</module>
@@ -100,7 +100,7 @@
     <module>kylin</module>
     <module>lens</module>
     <module>cassandra</module>
-    <module>zeppelin-web</module> -->
+    <module>zeppelin-web</module>
     <module>zeppelin-server</module>
  <!--   <module>zeppelin-distribution</module> -->
   <!--  <module>zeppelin-client</module>  -->
